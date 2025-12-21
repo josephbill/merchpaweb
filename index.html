@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MerchPA - AI-Powered Retail Execution Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0066cc, #00b894);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #0066cc;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, #0066cc, #0052a3);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 102, 204, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #0a1f44 0%, #1e3a5f 50%, #2d5a7b 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, #00b894, #00d2a0);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 6px 25px rgba(0, 184, 148, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(0, 184, 148, 0.5);
+        }
+
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            position: relative;
+            animation: fadeInRight 1s ease;
+        }
+
+        .phone-mockup {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 40px;
+            padding: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #00b894, #00d2a0);
+            padding: 3rem 2rem;
+            color: white;
+        }
+
+        .stats-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .features-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0066cc, #00b894);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Comparison Section */
+        .comparison {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .comparison-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .comparison-side {
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        .before {
+            background: linear-gradient(135deg, #ff7675, #ff6b6b);
+            color: white;
+        }
+
+        .after {
+            background: linear-gradient(135deg, #00b894, #00d2a0);
+            color: white;
+        }
+
+        .comparison-side h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .comparison-side ul {
+            list-style: none;
+        }
+
+        .comparison-side li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .comparison-side li:last-child {
+            border-bottom: none;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #0a1f44 0%, #1e3a5f 100%);
+            color: white;
+        }
+
+        .pricing-grid {
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.popular {
+            border: 3px solid #00b894;
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: linear-gradient(135deg, #00b894, #00d2a0);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #00b894;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 1.5rem 0;
+        }
+
+        .price span {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .pricing-card li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .pricing-card li::before {
+            content: '✓';
+            color: #00b894;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .pricing-btn {
+            width: 100%;
+            padding: 1rem;
+            background: white;
+            color: #0066cc;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pricing-btn:hover {
+            background: #00b894;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 6rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .testimonials-grid {
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #333;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0066cc, #00b894);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 3rem auto 0;
+        }
+
+        .faq-item {
+            background: #f8f9fa;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-question {
+            padding: 1.5rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+
+        .faq-answer {
+            padding: 0 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem 2rem;
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-question {
+            background: #0066cc;
+            color: white;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #00b894, #00d2a0);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-white-btn {
+            background: white;
+            color: #00b894;
+            padding: 1rem 2.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .cta-white-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: #00b894;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .hero-buttons, .cta-buttons {
+                flex-direction: column;
+            }
+
+            .primary-btn, .secondary-btn, .cta-white-btn {
+                width: 100%;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">MerchPA</div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#faq">FAQ</a>
+                <a href="tel:0798501657" class="cta-btn">Request Demo</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div>
+                <h1>From Data to Decisions in Real-Time</h1>
+                <p>AI-powered retail execution platform that transforms field merchandising into strategic advantage. Track every store visit, optimize every route, maximize every opportunity.</p>
+                <div class="hero-buttons">
+                    <a href="https://merchp-a-1.onrender.com/login" class="primary-btn">Start Free Trial</a>
+                    <a href="tel:0798501657" class="secondary-btn">Request Demo</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="phone-mockup">
+                    <div style="background: white; border-radius: 25px; padding: 2rem; min-height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                        <div style="width: 100%; height: 60px; background: linear-gradient(135deg, #0066cc, #00b894); border-radius: 10px; margin-bottom: 1rem;"></div>
+                        <div style="width: 100%; height: 120px; background: #f8f9fa; border-radius: 10px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: #666; font-weight: 600;">📍 Store Check-in</div>
+                        <div style="width: 100%; height: 80px; background: #f8f9fa; border-radius: 10px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: #666; font-weight: 600;">📸 Photo Capture</div>
+                        <div style="width: 100%; height: 60px; background: linear-gradient(135deg, #00b894, #00d2a0); border-radius: 10px; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700;">Submit Report</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <!-- <section class="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <h3>10,000+</h3>
+                <p>Merchandisers Tracked Daily</p>
+            </div>
+            <div class="stat-item">
+                <h3>98%</h3>
+                <p>On-Time Reporting Rate</p>
+            </div>
+            <div class="stat-item">
+                <h3>40%</h3>
+                <p>Reduction in Drive Time</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Real-Time Visibility</p>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Every Store Visit, Perfectly Tracked</h2>
+            <p>Comprehensive field merchandising solution powered by AI intelligence</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Smart Merchandiser Reporting</h3>
+                <p>Real-time geo-tagged reporting with automatic timestamps, location verification, and photo documentation. Works offline for uninterrupted field operations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI-Powered Analytics</h3>
+                <p>Individual and team performance tracking with AI-generated insights. Predictive analytics identify high-potential stores and optimization opportunities.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🗺️</div>
+                <h3>Route Optimization</h3>
+                <p>AI-driven route planning reduces drive time by 40%. Dynamic territory management ensures maximum coverage with fewer resources.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Executive Dashboard</h3>
+                <p>Real-time visibility into all field operations. Customizable KPIs, performance heatmaps, and automated report generation for stakeholders.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✓</div>
+                <h3>Compliance Tracking</h3>
+                <p>Custom audit forms for planogram compliance, stock levels, and pricing verification. Barcode scanning and competitor activity monitoring.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Real-Time Alerts</h3>
+                <p>Instant notifications for out-of-stock situations, pricing discrepancies, and promotional failures. Turn potential losses into opportunities.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison">
+        <div class="comparison-container">
+            <div class="section-header">
+                <h2>Transform Your Field Operations</h2>
+                <p>See the difference MerchPA makes in your daily merchandising workflow</p>
+            </div>
+            <div class="comparison-grid">
+                <div class="comparison-side before">
+                    <h3>❌ Manual Processes</h3>
+                    <ul>
+                        <li>📝 Paper-based reporting with delays</li>
+                        <li>⏰ Manual time and location tracking</li>
+                        <li>📞 Phone calls for updates and issues</li>
+                        <li>📊 Weekly reports compiled manually</li>
+                        <li>🚗 Inefficient route planning</li>
+                        <li>❓ Limited visibility into field activities</li>
+                        <li>📈 Reactive problem solving</li>
+                    </ul>
+                </div>
+                <div class="comparison-side after">
+                    <h3>✓ With MerchPA</h3>
+                    <ul>
+                        <li>📱 Real-time digital reporting</li>
+                        <li>📍 Automatic GPS verification</li>
+                        <li>⚡ Instant alerts and notifications</li>
+                        <li>🤖 AI-generated insights daily</li>
+                        <li>🗺️ Optimized routes automatically</li>
+                        <li>👁️ Complete field visibility 24/7</li>
+                        <li>🎯 Proactive strategy optimization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="section-header">
+            <h2>Transparent Pricing, Maximum Value</h2>
+            <p>Choose the plan that fits your team size and business needs</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <div class="price">$69<span>/user/month</span></div>
+                <p>Perfect for small CPG brands</p>
+                <ul>
+                    <li>Up to 10 merchandisers</li>
+                    <li>Basic reporting with location tags</li>
+                    <li>Mobile app with offline mode</li>
+                    <li>Standard route planning</li>
+                    <li>Core analytics dashboard</li>
+                    <li>Photo capture & audit forms</li>
+                    <li>Email support</li>
+                </ul>
+                <button class="pricing-btn" onclick="window.location.href='https://merchp-a-1.onrender.com/login'">Get Started</button>
+            </div>
+            <div class="pricing-card popular">
+                <div class="popular-badge">MOST POPULAR</div>
+                <h3>Professional</h3>
+                <div class="price">$129<span>/user/month</span></div>
+                <p>For growing CPG brands</p>
+                <ul>
+                    <li>Up to 50 merchandisers</li>
+                    <li>AI-powered performance analytics</li>
+                    <li>Advanced route optimization</li>
+                    <li>Custom audit forms & compliance</li>
+                    <li>Barcode scanning & competitor tracking</li>
+                    <li>Advanced reporting & exports</li>
+                    <li>CRM/ERP integration ready</li>
+                    <li>Priority support + account manager</li>
+                </ul>
+                <button class="pricing-btn" onclick="window.location.href='https://merchp-a-1.onrender.com/login'">Get Started</button>
+            </div>
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <div class="price">$199<span>/user/month</span></div>
+                <p>For large CPG manufacturers</p>
+                <ul>
+                    <li>Unlimited merchandisers</li>
+                    <li>Full AI analytics suite</li>
+                    <li>Automated report generation</li>
+                    <li>White-label options</li>
+                    <li>API access for custom integrations</li>
+                    <li>Real-time alerts & exceptions</li>
+                    <li>Dedicated success manager</li>
+                    <li>Custom training & SLA guarantees</li>
+                </ul>
+                <button class="pricing-btn" onclick="window.location.href='tel:0798501657'">Contact Sales</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <!-- <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <h2>Trusted by Leading CPG Brands</h2>
+            <p>See what merchandising managers say about MerchPA</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-text">"MerchPA transformed our field operations. The AI insights helped us reduce route planning time by 60% while improving store coverage. Our merchandisers love the intuitive mobile app."</div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SK</div>
+                    <div class="author-info">
+                        <h4>Sarah Kim</h4>
+                        <p>VP of Sales, Regional Beverage Distributor</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-text">"The real-time visibility is a game-changer. We can now identify and resolve out-of-stock situations within hours instead of days. ROI was evident in the first quarter."</div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">MP</div>
+                    <div class="author-info">
+                        <h4>Michael Patterson</h4>
+                        <p>Director of Merchandising, National Snack Brand</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-text">"Finally, a platform built specifically for CPG merchandising. The compliance tracking and automated reporting saved our team 20 hours per week. Worth every penny."</div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JR</div>
+                    <div class="author-info">
+                        <h4>Jennifer Rodriguez</h4>
+                        <p>Field Operations Manager, Grocery CPG</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Everything you need to know about MerchPA</p>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    How does the AI-powered analytics work?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    MerchPA's AI analyzes patterns in your field data to generate actionable insights. It tracks individual and team performance, identifies optimization opportunities, predicts high-potential stores, and recommends route improvements. The system learns from your data to provide increasingly accurate recommendations over time.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    Does the mobile app work offline?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! The MerchPA mobile app is fully functional offline. Merchandisers can complete check-ins, take photos, fill out audit forms, and capture all necessary data without internet connection. Data automatically syncs when connectivity is restored.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    How quickly can we get started?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Most teams are fully operational within 1-2 weeks. We provide comprehensive onboarding, training materials, and dedicated support to ensure a smooth transition. Enterprise clients receive custom onboarding programs tailored to their needs.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    Can MerchPA integrate with our existing systems?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Absolutely. Professional and Enterprise plans include integration capabilities with major CRM and ERP systems including Salesforce, SAP, Oracle, and Microsoft Dynamics. Enterprise plans also include API access for custom integrations.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    What kind of support do you provide?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Starter plans include email support. Professional plans get priority support with a dedicated account manager. Enterprise clients receive a dedicated success manager, custom training programs, and SLA guarantees for response times.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    Is there a minimum contract period?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    We offer flexible plans. Starter and Professional plans are month-to-month with no long-term commitment. Enterprise plans typically include annual agreements with volume discounts and additional benefits.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Field Operations?</h2>
+            <p>Join thousands of merchandisers already using MerchPA to optimize their retail execution</p>
+            <div class="cta-buttons">
+                <a href="https://merchp-a-1.onrender.com/login" class="cta-white-btn">Start Free Trial</a>
+                <a href="tel:0798501657" class="secondary-btn">Request Demo: 0798501657</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>MerchPA</h3>
+                <p>AI-powered retail execution platform for CPG brands and merchandisers.</p>
+                <p style="margin-top: 1rem;">© 2026 MerchPA. All rights reserved.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Product</h3>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="https://merchp-a-1.onrender.com/login">Sign Up</a>
+                <a href="tel:0798501657">Request Demo</a>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <a href="#faq">FAQ</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#">Documentation</a>
+                <a href="#">API</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <a href="tel:0798501657">Phone: 0798501657</a>
+                <a href="https://merchp-a-1.onrender.com/login">Admin Portal</a>
+                <p style="margin-top: 1rem;">Available integrations:</p>
+                <p>Salesforce • SAP • Oracle • MS Dynamics</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Built for CPG merchandising excellence.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sticky Navigation
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // FAQ Toggle
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.faq-question span').textContent = '+';
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                faqItem.classList.add('active');
+                element.querySelector('span').textContent = '−';
+            }
+        }
+
+        // Smooth scroll animation for elements
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards and pricing cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card, .pricing-card, .testimonial-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
